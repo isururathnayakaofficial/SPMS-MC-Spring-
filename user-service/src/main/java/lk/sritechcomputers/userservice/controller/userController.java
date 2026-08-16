@@ -25,15 +25,12 @@ public class userController {
     public  void createUser(@RequestBody UserDTO userdto) {
        userService.createUser(userdto);
     }
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
+
 
     // Get User by ID
-    @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
-        return ResponseEntity.ok(userService.getUserById(userId));
+    @GetMapping
+    public ResponseEntity<?> getAllAdmins() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     // Update User
