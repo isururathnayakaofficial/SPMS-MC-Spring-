@@ -21,6 +21,8 @@ public interface PaymentService {
 
     PaymentDetailRes update(Long id, PaymentUpdateReq req);
 
+    PaymentDetailRes update(Long id, PaymentUpdateReq req);
+
     void delete(Long id);
 
     PaymentReceiptRes pay(Long id);
