@@ -61,20 +61,21 @@ public class UserService implements lk.sritechcomputers.userservice.service.User
 
         userRepository.deleteById(Long.valueOf(String.valueOf(userId)));
     }
-    }
 
     @Override
-    public org.springframework.security.core.userdetails.User getUser(String username) {
-        return null;
-    }
+    public List<UserDTO> getAllUsers() {
+        List<User> adminList = (List<User>) userRepository.findAll();
 
-    @Override
-    public @Nullable List<org.springframework.security.core.userdetails.User> getAllUsers() {
-        return List.of();
-    }
-
-    @Override
-    public org.springframework.security.core.userdetails.@Nullable User getUserById(Long userId) {
-        return null;
+        return adminList.stream().map(admin -> {
+            UserDTO dto = new UserDTO();
+            dto.setName(admin.getName());
+            dto.setEmail(admin.getEmail());
+            dto.setPassword(passwordEncoder.encode(admin.getPassword()));
+            return dto;
+        }).toList();
     }
 }
+
+
+
+

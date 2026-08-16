@@ -10,9 +10,7 @@ public interface UserService {
     void createUser(UserDTO user);
     void updateUser(Long userId);
     void deleteUser(Long userId);
-    User getUser(String username);
+    List<UserDTO> getAllUsers();
 
-    @Nullable List<User> getAllUsers();
 
-    @Nullable User getUserById(Long userId);
 }
