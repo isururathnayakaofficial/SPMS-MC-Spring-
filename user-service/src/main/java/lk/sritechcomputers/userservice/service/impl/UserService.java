@@ -1,9 +1,14 @@
 package lk.sritechcomputers.userservice.service.impl;
 
 
+import lk.sritechcomputers.userservice.dto.UserDTO;
 import lk.sritechcomputers.userservice.repository.UserRepository;
-import org.springframework.security.core.userdetails.User;
+import org.jspecify.annotations.Nullable;
+//import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
+import lk.sritechcomputers.userservice.entity.User;
+
+import java.util.List;
 
 @Service
 public class UserService implements lk.sritechcomputers.userservice.service.UserService {
@@ -15,15 +20,22 @@ public class UserService implements lk.sritechcomputers.userservice.service.User
     }
 
     @Override
-    public User createUser(User user) {
+    public void createUser(UserDTO userDTO) {
 
-        return user;
+        User user = new User();
+        user.setName(userDTO.getName());
+        user.setPassword(userDTO.getPassword());
+        user.setEmail(userDTO.getEmail());
+        admin.
+
     }
 
     @Override
-    public void updateUser(Long userId, User user) {
+    public void updateUser(Long userId, org.springframework.security.core.userdetails.User user) {
 
     }
+
+
 
     @Override
     public void deleteUser(String username) {
@@ -32,6 +44,16 @@ public class UserService implements lk.sritechcomputers.userservice.service.User
 
     @Override
     public org.springframework.security.core.userdetails.User getUser(String username) {
+        return null;
+    }
+
+    @Override
+    public @Nullable List<User> getAllUsers() {
+        return List.of();
+    }
+
+    @Override
+    public @Nullable User getUserById(Long userId) {
         return null;
     }
 }

@@ -1,6 +1,7 @@
 package lk.sritechcomputers.userservice.controller;
 
 import jakarta.ws.rs.POST;
+import lk.sritechcomputers.userservice.dto.UserDTO;
 import lk.sritechcomputers.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,8 @@ public class userController {
         this.userService = userService;
     }
     @POST
-    public ResponseEntity<User>createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    public  void createUser(@RequestBody UserDTO userdto) {
+       userService.createUser(userdto);
     }
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
