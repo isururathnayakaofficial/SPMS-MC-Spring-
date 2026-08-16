@@ -38,16 +38,16 @@ public class userController {
 
     // Update User
     @PutMapping("/{userId}")
-    public ResponseEntity<?> updateUser(Long userdto, @PathVariable Long userId) {
-     userService.updateUser(userdto,userId);
+    public ResponseEntity<?> updateUser(@PathVariable Long userId ) {
+     userService.updateUser(userId);
      return ResponseEntity.ok().build();
     }
 
 
     // Delete User
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
-        userService.deleteUser(String.valueOf(userId));
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(Long.valueOf(String.valueOf(userId)));
+        return ResponseEntity.ok("user deleted successfully");
     }
 }

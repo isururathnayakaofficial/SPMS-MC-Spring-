@@ -41,7 +41,7 @@ public class UserService implements lk.sritechcomputers.userservice.service.User
     }
 
     @Override
-    public void updateUser(Long userId, Long user) {
+    public void updateUser(Long userId) {
         User users = userRepository.findById(Long.valueOf(String.valueOf(userId)))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
 
@@ -54,8 +54,13 @@ public class UserService implements lk.sritechcomputers.userservice.service.User
 
 
     @Override
-    public void deleteUser(String username) {
+    public void deleteUser(Long userId) {
+        if (!userRepository.existsById(Long.valueOf(String.valueOf(userId)))) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found");
+        }
 
+        userRepository.deleteById(Long.valueOf(String.valueOf(userId)));
+    }
     }
 
     @Override
