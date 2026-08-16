@@ -5,8 +5,11 @@ import lk.sritechcomputers.userservice.dto.UserDTO;
 import lk.sritechcomputers.userservice.repository.UserRepository;
 import org.jspecify.annotations.Nullable;
 //import org.springframework.security.core.userdetails.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import lk.sritechcomputers.userservice.entity.User;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -14,9 +17,11 @@ import java.util.List;
 public class UserService implements lk.sritechcomputers.userservice.service.UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -24,15 +29,26 @@ public class UserService implements lk.sritechcomputers.userservice.service.User
 
         User user = new User();
         user.setName(userDTO.getName());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEmail(userDTO.getEmail());
-        admin.
+
+        User savedUser = userRepository.save(user);
+
+        if (savedUser != null) {
+            System.out.println(savedUser.toString());
+        }
 
     }
 
     @Override
-    public void updateUser(Long userId, org.springframework.security.core.userdetails.User user) {
+    public void updateUser(Long userId, Long user) {
+        User users = userRepository.findById(Long.valueOf(String.valueOf(userId)))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
 
+        users.setName(users.getName());
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
+        users.setEmail(users.getEmail());
+        userRepository.save(users);
     }
 
 
@@ -48,12 +64,12 @@ public class UserService implements lk.sritechcomputers.userservice.service.User
     }
 
     @Override
-    public @Nullable List<User> getAllUsers() {
+    public @Nullable List<org.springframework.security.core.userdetails.User> getAllUsers() {
         return List.of();
     }
 
     @Override
-    public @Nullable User getUserById(Long userId) {
+    public org.springframework.security.core.userdetails.@Nullable User getUserById(Long userId) {
         return null;
     }
 }
