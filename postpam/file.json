@@ -1,0 +1,785 @@
+{
+  "info": {
+    "_postman_id": "spms-api-postman datas",
+    "name": "SPMS - Smart Parking Management System API",
+    "description": "Postman collection for the SPMS polyglot microservices architecture through Spring Cloud API Gateway."
+
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "jwtToken",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": "1"
+    },
+    {
+      "key": "ownerId",
+      "value": "2"
+    },
+    {
+      "key": "spaceId",
+      "value": "SLOT-B201"
+    },
+    {
+      "key": "vehicleId",
+      "value": "1"
+    },
+    {
+      "key": "bookingId",
+      "value": "1"
+    },
+    {
+      "key": "paymentId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - User Service",
+      "item": [
+        {
+          "name": "Register Driver",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kasun Perera\",\n  \"email\": \"kasun.driver@example.com\",\n  \"password\": \"Driver@123\",\n  \"role\": \"DRIVER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Register Parking Owner",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nimal Fernando\",\n  \"email\": \"nimal.owner@example.com\",\n  \"password\": \"Owner@123\",\n  \"role\": \"OWNER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"kasun.driver@example.com\",\n  \"password\": \"Driver@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/authenticate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "authenticate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kasun Perera Updated\",\n  \"email\": \"kasun.driver@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "{{userId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Parking Space Service",
+      "item": [
+        {
+          "name": "Create Parking Space",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"SLOT-B201\",\n  \"location\": \"Colombo City Center - Level 2\",\n  \"city\": \"Colombo\",\n  \"zone\": \"Zone B\",\n  \"ownerId\": \"2\",\n  \"type\": \"NORMAL\",\n  \"pricePerHour\": 500.00,\n  \"isAvailable\": true,\n  \"totalSlots\": 1,\n  \"description\": \"Covered parking space near the main entrance.\",\n  \"imageUrl\": \"https://images.unsplash.com/photo-1506521781263-d8422e82f27a\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/spaces",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "spaces"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Spaces",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/spaces",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "spaces"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Available Spaces",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/spaces/available",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "spaces",
+                "available"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Space By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/spaces/{{spaceId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "spaces",
+                "{{spaceId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Spaces By City",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/spaces/city/Colombo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "spaces",
+                "city",
+                "Colombo"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Spaces By Zone",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/spaces/zone/Zone B",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "spaces",
+                "zone",
+                "Zone B"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Spaces By Owner",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/spaces/owner/{{ownerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "spaces",
+                "owner",
+                "{{ownerId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Space Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isAvailable\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/spaces/{{spaceId}}/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "spaces",
+                "{{spaceId}}",
+                "status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Parking Space",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/spaces/{{spaceId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "spaces",
+                "{{spaceId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Vehicle Service",
+      "item": [
+        {
+          "name": "Register Vehicle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"licensePlate\": \"WP-CAA-4521\",\n  \"make\": \"Toyota\",\n  \"model\": \"Prius\",\n  \"color\": \"White\",\n  \"vehicleType\": \"HYBRID\",\n  \"ownerId\": \"1\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/vehicles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vehicles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Vehicles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/vehicles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vehicles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicle By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/vehicles/{{vehicleId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vehicles",
+                "{{vehicleId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicles By Owner",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/vehicles/owner/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vehicles",
+                "owner",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Vehicle Entry",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"IN\",\n  \"spaceId\": \"{{spaceId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/vehicles/{{vehicleId}}/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vehicles",
+                "{{vehicleId}}",
+                "status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Vehicle Exit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"OUT\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/vehicles/{{vehicleId}}/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vehicles",
+                "{{vehicleId}}",
+                "status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Vehicle",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/vehicles/{{vehicleId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vehicles",
+                "{{vehicleId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Payment Service",
+      "item": [
+        {
+          "name": "Process Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{userId}}\",\n  \"booking_id\": \"{{bookingId}}\",\n  \"space_id\": \"{{spaceId}}\",\n  \"amount\": 1000.00,\n  \"currency\": \"LKR\",\n  \"payment_method\": \"CARD\",\n  \"description\": \"Parking fee for 2 hours\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Payment By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/payments/{{paymentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payments",
+                "{{paymentId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Digital Receipt",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/payments/{{paymentId}}/receipt",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payments",
+                "{{paymentId}}",
+                "receipt"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User Payment History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/payments/user/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payments",
+                "user",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Refund Payment",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/payments/{{paymentId}}/refund",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payments",
+                "{{paymentId}}",
+                "refund"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Booking Service",
+      "item": [
+        {
+          "name": "Create Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"spaceId\": \"{{spaceId}}\",\n  \"vehicleLicensePlate\": \"WP-CAA-4521\",\n  \"durationHours\": 2.0,\n  \"totalAmount\": 1000.00,\n  \"paymentId\": 1,\n  \"receiptNumber\": \"RCP-20260816-B201\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bookings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Booking By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings/{{bookingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings",
+                "{{bookingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User Booking History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings/user/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings",
+                "user",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Space Bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings/space/{{spaceId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings",
+                "space",
+                "{{spaceId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings/{{bookingId}}/cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings",
+                "{{bookingId}}",
+                "cancel"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Complete Booking",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings/{{bookingId}}/complete",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bookings",
+                "{{bookingId}}",
+                "complete"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
